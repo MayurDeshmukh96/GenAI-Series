@@ -22,5 +22,5 @@ langchain-text-splitters
 chromadb
 sentence-transformers
 rich
- 
+torchvision
         
