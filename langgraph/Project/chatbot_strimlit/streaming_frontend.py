@@ -37,7 +37,7 @@ if user_input:
     with st.chat_message('user'):
         st.text(user_input)
     
-
+# Added streaming here
     
     with st.chat_message('assistant'):
         ai_message = st.write_stream(
