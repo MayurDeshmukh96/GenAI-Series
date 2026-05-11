@@ -23,4 +23,4 @@ chromadb
 sentence-transformers
 rich
 torchvision
-        
+langgraph-checkpoint-sqlite  
