@@ -1,13 +1,17 @@
 from langgraph.graph import StateGraph,START,END
 from typing import TypedDict,Annotated
 from langchain_google_genai import ChatGoogleGenerativeAI
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage,HumanMessage
 import sqlite3
+import os
 
-load_dotenv()
+load_dotenv(find_dotenv())
+
+if "GEMINI_API_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
+    os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
 
 llm = ChatGoogleGenerativeAI(model='gemini-2.5-flash-lite')
 

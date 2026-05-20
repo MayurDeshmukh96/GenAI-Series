@@ -4,9 +4,11 @@ from langchain_core.messages import HumanMessage
 import uuid
 
 
+
+
 def generate_thread_id():
     # It generate random thread ID for our conversation.
-    thread_uuid = uuid.uuid4()
+    thread_uuid = str(uuid.uuid4())
     return thread_uuid
 
 def reset_chat():
@@ -18,10 +20,16 @@ def reset_chat():
 def add_threads(thread_id):
     if thread_id not in st.session_state['chat_threads']:
         st.session_state['chat_threads'].append(thread_id)
-
 def load_conversation(thread_id):
+    config = {
+        'configurable':{'thread_id':thread_id},
+        "metadata":{
+            "thread_id":thread_id
+        },
+        "run_name":"chat_run"
+    }
     state = chatbot.get_state(
-        config={'configurable':{'thread_id':thread_id}}
+        config=config
         )
     
     if state and 'messages' in state.values:
@@ -81,7 +89,14 @@ if user_input:
     st.session_state['message_history'].append({'role':'user','content':user_input})
 
     
-    CONFIG = {'configurable':{'thread_id':st.session_state['thread_id']}}
+    CONFIG = {
+        'configurable': {'thread_id': st.session_state['thread_id']},
+        'metadata': {
+            'thread_id': str(st.session_state['thread_id']),
+            'session_id': str(st.session_state['thread_id'])
+        },
+        'run_name': 'chat_run'
+    }
 
     with st.chat_message('user'):
         st.text(user_input)
